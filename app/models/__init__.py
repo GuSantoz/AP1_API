@@ -17,7 +17,15 @@ class Aluno(db.Model):
     data_nascimento = db.Column(db.String, nullable=False)
     nota_primeiro_semestre = db.Column(db.Float, nullable=False)
     nota_segundo_semestre = db.Column(db.Float, nullable=False)
-    media_final = db.Column(db.Float, nullable=False)
+    # media_final = db.Column(db.Float, nullable=False)
+    @property
+    def media_final(self):
+        """Calcula e retorna a média final."""
+        # Garante que os valores não são None antes de calcular
+        if self.nota_primeiro_semestre is None or self.nota_segundo_semestre is None:
+            return 0.0
+        
+        return (self.nota_primeiro_semestre + self.nota_segundo_semestre) / 2.0
 
 class Turma(db.Model):
     id = db.Column(db.Integer, primary_key=True)

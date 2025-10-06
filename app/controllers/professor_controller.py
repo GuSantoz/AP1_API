@@ -11,6 +11,11 @@ def create_professor(data):
         observacoes=data.get("observacoes")
     )
 
+    db.session.add(novo)
+    db.session.commit()
+    db.session.refresh(novo)  
+    return novo
+
 def update_professor(professor_id, data):
     professor = Professor.query.get(professor_id)
     if not professor:

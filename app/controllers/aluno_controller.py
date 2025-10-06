@@ -18,7 +18,6 @@ def create_aluno(data):
         data_nascimento=data["data_nascimento"],
         nota_primeiro_semestre=data["nota_primeiro_semestre"],
         nota_segundo_semestre=data["nota_segundo_semestre"],
-        media_final=data["media_final"],
         turma_id=data["turma_id"]
     )
 
@@ -40,7 +39,6 @@ def update_aluno(aluno_id, data):
     aluno.data_nascimento = data.get("data_nascimento", aluno.data_nascimento)
     aluno.nota_primeiro_semestre = data.get("nota_primeiro_semestre", aluno.nota_primeiro_semestre)
     aluno.nota_segundo_semestre = data.get("nota_segundo_semestre", aluno.nota_segundo_semestre)
-    aluno.media_final = data.get("media_final", aluno.media_final)
     aluno.turma_id = data.get("turma_id", aluno.turma_id)
 
     db.session.commit()

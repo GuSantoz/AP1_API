@@ -19,6 +19,8 @@ def registra_professores(app):
     @app.route("/professores", methods=["POST"])
     def adicionar_professor():
         data = request.get_json()
+        if data is None:
+            return jsonify({"erro": "Corpo da requisição vazio ou inválido. Certifique-se de que o Content-Type é application/json."}), 400
         professor = create_professor(data)
         return jsonify({
             "id": professor.id,
