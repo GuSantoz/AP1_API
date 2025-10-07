@@ -6,8 +6,6 @@ info:
 
 host: 127.0.0.1:5000
 basePath: /
-schemes:
-  - http
 
 tags:
   - name: Alunos
@@ -27,11 +25,10 @@ paths:
         - application/json
       responses:
         200:
-          description: Lista de alunos retornada com sucesso
+          description: Lista de alunos retornada com sucesso"
           schema:
-            type: array
             items:
-              $ref: "#/definitions/Aluno"
+              $ref: "#/definitions/Alunos"
     post:
       tags:
         - Alunos
@@ -43,8 +40,6 @@ paths:
           name: body
           description: Dados do aluno a ser criado. O campo 'turma_id' é obrigatório.
           required: true
-          schema:
-            $ref: "#/definitions/AlunoCriacao"
       responses:
         201:
           description: Aluno criado com sucesso
@@ -69,8 +64,6 @@ paths:
       responses:
         200:
           description: Aluno encontrado e retornado
-          schema:
-            $ref: "#/definitions/Aluno"
         404:
           description: Aluno não encontrado
     put:
@@ -88,8 +81,6 @@ paths:
           name: body
           description: Novos dados do aluno
           required: true
-          schema:
-            $ref: "#/definitions/AlunoCriacao" # Usa o mesmo esquema, assumindo que PUT requer todos os campos
       responses:
         200:
           description: Aluno atualizado com sucesso
@@ -118,7 +109,6 @@ paths:
         200:
           description: Lista de professores retornada com sucesso
           schema:
-            type: array
             items:
               $ref: "#/definitions/Professor"
     post:
@@ -131,9 +121,6 @@ paths:
         - in: body
           name: body
           description: Dados do professor a ser criado
-          required: true
-          schema:
-            $ref: "#/definitions/ProfessorCriacao"
       responses:
         201:
           description: Professor criado com sucesso
@@ -175,8 +162,6 @@ paths:
           name: body
           description: Novos dados do professor
           required: true
-          schema:
-            $ref: "#/definitions/ProfessorCriacao"
       responses:
         200:
           description: Professor atualizado com sucesso
@@ -205,7 +190,7 @@ paths:
         200:
           description: Lista de turmas retornada com sucesso
           schema:
-            type: array
+          #   type: array
             items:
               $ref: "#/definitions/Turma"
     post:
@@ -219,8 +204,6 @@ paths:
           name: body
           description: Dados da turma a ser criada. 'professor_id' e 'ativo' são obrigatórios.
           required: true
-          schema:
-            $ref: "#/definitions/TurmaCriacao"
       responses:
         201:
           description: Turma criada com sucesso
@@ -264,13 +247,9 @@ paths:
           name: body
           description: Novos dados da turma
           required: true
-          schema:
-            $ref: "#/definitions/TurmaCriacao"
       responses:
         200:
           description: Turma atualizada com sucesso
-          schema:
-            $ref: "#/definitions/Turma"
         404:
           description: Turma não encontrada
     delete:
@@ -289,7 +268,6 @@ definitions:
     properties:
       id:
         type: integer
-        readOnly: true
       nome:
         type: string
       idade:
@@ -307,27 +285,16 @@ definitions:
       media_final:
         type: number
         format: float
-        readOnly: true
+        # readOnly: true
       turma_id:
         type: integer
   
-  AlunoCriacao:
-    allOf:
-      - $ref: "#/definitions/Aluno"
-    required:
-      - nome
-      - idade
-      - data_nascimento
-      - nota_primeiro_semestre
-      - nota_segundo_semestre
-      - turma_id
-
   Professor:
     type: object
     properties:
       id:
         type: integer
-        readOnly: true
+        # readOnly: true
       nome:
         type: string
       idade:
@@ -337,31 +304,15 @@ definitions:
       observacoes:
         type: string
   
-  ProfessorCriacao:
-    allOf:
-      - $ref: "#/definitions/Professor"
-    required:
-      - nome
-      - idade
-      - materia
-
   Turma:
     type: object
     properties:
       id:
         type: integer
-        readOnly: true
+        # readOnly: true
       descricao:
         type: string
       professor_id:
         type: integer
       ativo:
         type: boolean
-  
-  TurmaCriacao:
-    allOf:
-      - $ref: "#/definitions/Turma"
-    required:
-      - descricao
-      - professor_id
-      - ativo

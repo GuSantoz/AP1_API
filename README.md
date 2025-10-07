@@ -4,39 +4,48 @@
 
 Seu projeto agora está configurado para ser rodado primariamente com Docker, a forma mais eficiente e recomendada para ambientes de produção.
 
-### Opção 1: Rodar com Docker (Recomendado)
+### Rodar com Docker  
 
-Esta é a maneira mais simples, que usa o servidor de produção **Gunicorn** e garante que seu banco de dados (SQLite) seja persistente usando Volumes.
+### A aplicação está conteinerizada com os seguintes arquivos:
+
+- **Dockerfile** 🐳: Define o ambiente Python e instala todas as dependências.
+
 
 1.  **Pré-requisito:** Certifique-se de ter o Docker Desktop instalado e rodando.
+
 2.  **Construa a imagem:**
     ```bash
-    docker-compose build
+    docker build -t ap1_api:latest .
     ```
-3.  **Inicie os serviços em segundo plano:**
+3.  **Inicie o container:**
     ```bash
-    docker-compose up -d
+    docker run -d -p 5000:5000 --name ap1_api -v escola-ap1:/app/data ap1_api:latest
     ```
 
-### Opção 2: Rodar Localmente (Desenvolvimento)
+### Rodar Localmente (Desenvolvimento)
 
 Use esta opção apenas para depuração ou desenvolvimento rápido.
 
-1.  Clone o repositório e ative seu ambiente virtual (`venv`).
-2.  Instale as dependências:
+1.  **Clone o repositório e ative seu ambiente virtual (`venv`).**
+
+    ```bash
+    python -m venv venv
+    .\venv\Scripts\activate
+    ```
+
+2.  **Instale as dependências:**
     ```bash
     pip install -r requirements.txt
     ```
-3.  **Rode o projeto com Gunicorn:**
+
+3.  **Rode o projeto:**
     ```bash
-    gunicorn --bind 127.0.0.1:5000 run:app
+    python run.py
     ```
 
 ---
 
 ## 💻 Acessando a API
-
-Após iniciar o projeto (com Docker ou localmente):
 
 - **API Base:** `http://127.0.0.1:5000/`
 - **Documentação Interativa (Swagger UI):** `http://127.0.0.1:5000/apidocs`
@@ -54,10 +63,3 @@ O projeto segue o padrão Model-View-Controller (MVC) para organização:
 - **run.py** → Ponto de entrada da aplicação, onde a instância `app` é criada e exposta para o servidor Gunicorn.
 
 ---
-
-## 🐳 Detalhes da Contêinerização
-
-A aplicação está conteinerizada com os seguintes arquivos:
-
-- **`Dockerfile`**: Define o ambiente Python e instala todas as dependências, incluindo o servidor **Gunicorn**.
-- **`docker-compose.yml`**: Orquestra o serviço `api`, garantindo que o banco de dados (SQLite) persista os dados através do Volume Docker `api_data`. O comando de inicialização usa `gunicorn run:app`.
