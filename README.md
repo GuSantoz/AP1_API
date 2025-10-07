@@ -63,3 +63,9 @@ O projeto segue o padrão Model-View-Controller (MVC) para organização:
 - **run.py** → Ponto de entrada da aplicação, onde a instância `app` é criada e exposta para o servidor Gunicorn.
 
 ---
+
+### Colaboradores:
+
+- Alex Manoel - 1701381
+- Ana Laura Brandão - 2402680
+- Gustavo Bomfim - 2403139
